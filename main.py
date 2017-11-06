@@ -1,26 +1,24 @@
 import csv
-import datetime
-import collections
+fullname = []
 
-storeBudget = {}
-
-
-with open ('budget_data_2.csv', mode='r') as csvfile2:
-    reader = csv.reader(csvfile2)
-    #stores 2nd budget csv file into dictionary
-    storeBudget = {rows[0]:rows[1] for rows in reader}
-        
-with open ('budget_data_1.csv', mode='r') as csvfile1:
-    reader = csv.reader(csvfile1)
-    #stores 1st budget csv file into dictionary 
+with open ('employee_data1.csv', mode='r') as csvfile:
+    reader = csv.reader(csvfile, delimiter = ',')
+     #stores all the fullnames in a list
     for rows in reader:
-        storeBudget[rows[0]] = rows[1]
-        
-#need to fix dates. Data may be bad as dates in budget_data_2 may lack year.
-#fixDates = datetime.datetime.strptime(str(storeBudget.keys()), "%d/%m/%y")
+        if rows[1] != "Name":
+            fullname.append(rows[1])
 
-#ordered = collections.OrderedDict(sorted(storeBudget.items(), key=lambda t: t[0]))
-print(storeBudget.keys())        
+    with open ('employee_data2.csv', mode='r') as csvfile1:
+        reader = csv.reader(csvfile1, delimiter = ',')
+        #stores fullnames from 2nd data file into list
+        for rows in reader:
+            if rows[1] != "Name":
+                fullname.append(rows[1])
+            
+#       with open ('employee_data_new.csv', mode = 'w') as csvfile1:
+#           writer = csv.writer(csvfile1, delimiter = ',')
+
+first, last = zip(*(i.split(' ') for i in fullname))
 
 
-        
+print (last)
